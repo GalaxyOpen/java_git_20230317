@@ -8,8 +8,6 @@ public class hello {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to E-java Space");
-		
-		
 
 	}
 
