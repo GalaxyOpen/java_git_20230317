@@ -1,5 +1,7 @@
 package day11;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -20,6 +22,8 @@ public class BoardService {
 		System.out.println("작성자> ");
 		boardDTO.setWriter(sc.next());
 		sc.nextLine();
+		
+		
 
 		boolean success = br.save(boardDTO, boardDTO.getBno());
 		if (success = true) {
@@ -33,11 +37,15 @@ public class BoardService {
 	// 파인드올에서 레퍼지에있는 메소드를 통해 리스ㅊㅌ를 가지고와서 출력해주고싶다
 	public void findAll() {
 		Map<String, BoardDTO> map = br.findAll();
+		
+		List<String> kS = new ArrayList<>(map.keySet());
+		//Collections.sort(kS, Collections.reverseOrder()); 오름차순
+        Collections.sort(kS); // 내림차순
 
 		System.out.println("글번호\t제목\t\t작성자\t조회수\t게시일");
 		System.out.println("----------------------------------------------------------");
         
-		for (String key:map.keySet()) {
+		for (String key:kS) {
 			map.get(key).print();
 		}
 		}
