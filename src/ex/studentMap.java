@@ -36,6 +36,8 @@ public class studentMap {
 		map.put(3,s3);
        
 		
+		
+		
 		System.out.println("id\t학번\t이름\t전공\t전화번호");
 		System.out.println("=====================================================");
 		for(int key:map.keySet()) {

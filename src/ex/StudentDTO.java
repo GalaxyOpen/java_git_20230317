@@ -1,15 +1,24 @@
 package ex;
 
+import java.util.Objects;
+
 public class StudentDTO {
 	
-	private String studentNumber;
-	private String studentName;
-	private String studentMajor;
-	private String studentMobile;
+	private Long id; // 관리번호
+	private String studentNumber; //학번
+	private String studentName; // 이름
+	private String studentMajor; // 전공
+	private String studentMobile; // 전화번호
 	
 
 	public String getStudentNumber() {
 		return studentNumber;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setStudentNumber(String studentNumber) {
 		this.studentNumber = studentNumber;
@@ -38,6 +47,25 @@ public class StudentDTO {
      String str = studentNumber + "\t" +studentName + "\t" + studentMajor + "\t" +studentMobile;
      return str;
     }
+	//두 객체의 필드값이 모두 일치하는지 판단하려면 HashCode(), equals() 메서드를 재정의한다.
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, studentMajor, studentMobile, studentName, studentNumber);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StudentDTO other = (StudentDTO) obj;
+		return Objects.equals(id, other.id) && Objects.equals(studentMajor, other.studentMajor)
+				&& Objects.equals(studentMobile, other.studentMobile) && Objects.equals(studentName, other.studentName)
+				&& Objects.equals(studentNumber, other.studentNumber);
+	}
+	
 	
 
 }
