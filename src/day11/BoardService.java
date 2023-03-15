@@ -39,8 +39,8 @@ public class BoardService {
 		Map<String, BoardDTO> map = br.findAll();
 		
 		List<String> kS = new ArrayList<>(map.keySet());
-		//Collections.sort(kS, Collections.reverseOrder()); 오름차순
-        Collections.sort(kS); // 내림차순
+		//Collections.sort(kS, Collections.reverseOrder()); //내림차순
+        Collections.sort(kS); // 오름차순
 
 		System.out.println("글번호\t제목\t\t작성자\t조회수\t게시일");
 		System.out.println("----------------------------------------------------------");
@@ -136,5 +136,34 @@ public class BoardService {
 //			System.out.println("삭제성공");
 //		}
 //	}
-
+    public void testdata() {
+    	
+//    	BoardDTO test1 = new BoardDTO("1111", "1111");
+//    	BoardDTO test2 = new BoardDTO("2222", "2222");
+//    	BoardDTO test3 = new BoardDTO("3333", "3333");
+//    	BoardDTO test4 = new BoardDTO("4444", "4444");
+//    	BoardDTO test5 = new BoardDTO("5555", "5555");
+//    	
+//    	br.save(test1, test1.getBno());
+//    	br.save(test2, test2.getBno());
+//    	br.save(test3, test3.getBno());
+//    	br.save(test4, test4.getBno());
+//    	br.save(test5, test5.getBno());    	
+    	
+    	for(int i=1; i<=5; i++) {
+    	BoardDTO test = new BoardDTO();
+    	test.setTitle("title"+i);
+    	test.setWriter("writer"+i);
+    	br.save(test,test.getBno());
+    	
+    	
+    	}
+    	System.out.println("test데이터 입력 완료");
+    }
+    public void index() {
+    	System.out.println("찾으실 작성자를 입력하세요");
+    	String searchwriter = sc.next();
+    	
+    
+    }
 }
