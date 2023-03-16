@@ -1,6 +1,7 @@
 package day11;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,16 @@ public class BoardRepository {
 
 	// 서비스에서 데이터를 넘겨받아야되니까 매개변수가 필요하다
 	public boolean save(BoardDTO boardDTO, String bno) {
-		boardmap.put(bno,boardDTO);
+//		boardmap.put(boardDTO.getBno(),boardDTO);
+		
+		BoardDTO result = boardmap.put(boardDTO.getBno(),boardDTO);
+		if(result == null) {
 		
 		return true; // 리턴값은 불린값으로 나온다
+		}else {
+			return false;
+		}
+		
 		
 		// 리스트의 에드메소드를 실행함
 		// 에드 메소드 자체를 리턴을 할수 없으니 리턴타입에 맞게 트루 또는 펄스로 리턴한다
@@ -25,17 +33,19 @@ public class BoardRepository {
 
 	// findall이란 메소드는 서비스에서 호출함 서비스는 리스트를 가져가야되니까 리턴타입은 리스트로 해야된다
 	public Map<String, BoardDTO> findAll() {
-
 		return boardmap;
-
 	}
 
 	public BoardDTO findById(String bno) {
+		/*map 반복문 돌리고
+		 * bno 와 일치하는 객체를 찾고
+		 * 찾으면 리턴
+		*/
 		for (String key:boardmap.keySet()) {
-			if (boardmap.get(key).getBno().equals(bno)) {
-				BoardDTO boardDTO = boardmap.get(key);
+			if (bno.equals(boardmap.get(key).getBno())) {
+				
 				// 2. b.increaseCnt();
-				return boardDTO; // 메소드가 호출되서 실행되다 리턴을 만나면 메소드를 빠져나간다
+				return  boardmap.get(key); // 메소드가 호출되서 실행되다 리턴을 만나면 메소드를 빠져나간다
 			}
 		}
 		return null;
@@ -45,7 +55,7 @@ public class BoardRepository {
 	public boolean update(BoardDTO boardDTO, String bno) {
 
 		for (String key:boardmap.keySet()) {
-			if (boardmap.get(key).getBno().equals(bno)) {
+			if (bno.equals(boardmap.get(key).getBno())) {
 				boardmap.get(key).setTitle(boardDTO.getTitle());
 				boardmap.get(key).setWriter(boardDTO.getWriter());
 				return true;
@@ -53,6 +63,18 @@ public class BoardRepository {
 		}
 		return false; // 이프안에 안드러왔으면 false이다
 	}
+	
+	public boolean updateNew(String bno, String updateTitle, String updateWriter) {
+		for (String key:boardmap.keySet()) {
+			if (bno.equals(boardmap.get(key).getBno())) {
+				boardmap.get(key).setTitle(updateTitle);
+				boardmap.get(key).setWriter(updateWriter);
+				return true;
+			}
+		}
+		return false; // 이프안에 안드러왔으면 false이다
+	}
+
 
 	
 	public boolean delete(BoardDTO BoardDTO, String bno) {
@@ -83,7 +105,18 @@ public class BoardRepository {
 //		return false;
 //
 //	}
+	public List<BoardDTO> index(String searchWriter) { // List<BoardDTO>를 돌려줄 예정
+		ArrayList<BoardDTO> List = new ArrayList<>(); //searchWriter가 같은 객체만 모을 리스트
+		ArrayList<String> search = new ArrayList<>(boardmap.keySet()); // BoardMap의 키 값으로 정렬할 리스트
+		search.sort(Comparator.naturalOrder()); // search 리스트를 정순으로 정렬하겠다. 
+		for (String m : search) {
+			if(boardmap.get(m).getWriter().equals(searchWriter)) {
+				List.add(boardmap.get(m));
+			}
+		}
+		return List;
 
+	}
 }
 
 	

@@ -25,7 +25,7 @@ public class BoardMain {
 				service.save();
 
 			} else if (menu == 2) {
-				// 메인에서 리스트를 보고싶으면 메인에서 서브스호출 서비스에서는 레퍼지에있는 리스트를 가져온다
+				// 메인에서 리스트를 보고싶으면 메인에서 서비스호출 서비스에서는 레퍼지에있는 리스트를 가져온다
 
 				service.findAll();
 

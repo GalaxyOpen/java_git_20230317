@@ -23,8 +23,15 @@ public class BoardDTO {
 		this.postDate = DTF.format(LocalDateTime.now());
 
 	}
+	
+	
 
-	public BoardDTO(String title, String writer) {
+	public BoardDTO(String updatetitle, String updatewriter) {
+		
+		this.title = title;
+		this.writer = writer;
+	}
+	public BoardDTO(String writer) {
 		this.bno = "B" + number++;
 		this.postDate = DTF.format(LocalDateTime.now());
 		this.title = title;
