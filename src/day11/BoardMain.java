@@ -38,7 +38,7 @@ public class BoardMain {
 			} else if (menu == 6) {
 			    service.testdata();
 			} else if (menu == 7) {  
-			    //service.index();
+			    service.index();
 			} else if (menu == 0) {
 				break;
 			} else {

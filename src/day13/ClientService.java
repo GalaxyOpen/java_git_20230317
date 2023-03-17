@@ -1,6 +1,7 @@
 package day13;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ClientService {
@@ -47,11 +48,11 @@ public class ClientService {
 		}	
 	}
 	public void findAll() {
-		List<ClientDTO> cList = repository.findAll();
+		Map<String, ClientDTO> clientmap = repository.findAll();
 		System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
 		System.out.println("-------------------------------------------------------");
-		for(ClientDTO c : cList) {
-			System.out.println(c.toString());
+		for(String key : clientmap.keySet()) {
+			System.out.println(clientmap.get(key).toString());
 		}
 	}
 	public void findById() {

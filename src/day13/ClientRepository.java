@@ -1,7 +1,9 @@
 package day13;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClientRepository {
 	private static ClientRepository repository = new ClientRepository();
@@ -10,31 +12,38 @@ public class ClientRepository {
 		return repository;
 	}
 	
-	List<ClientDTO> cList = new ArrayList<>();
+	Map<String, ClientDTO> clientmap = new HashMap<>();
 	List<BreakdownDTO> bList = new ArrayList<>();
 	
 	public boolean save(ClientDTO clientDTO) {
-		return cList.add(clientDTO);
+		
+		ClientDTO result = clientmap.put(clientDTO.getId(), clientDTO);
+		if (result == null) {
+		return true ;
+		}else {
+			return false;
+		}
 	}
 	public boolean loginCheck(String id, String password) {
-		for(ClientDTO c : cList) {
-			if(c.getId().equals(id) && c.getPassword().equals(password)) {
+		for(String key : clientmap.keySet()) {
+			if(clientmap.get(key).getId().equals(id) && clientmap.get(key).getPassword().equals(password)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	public List<ClientDTO> findAll(){
-		return cList;
+	public Map<String, ClientDTO> findAll(){
+		return clientmap;
 	}
 	public ClientDTO findById(String id, String password) {
-		for(ClientDTO c : cList) {
-			if(c.getId().equals(id) && c.getPassword().equals(password)) {
-				return c;
+		for(String key : clientmap.keySet()) {
+			if(clientmap.get(key).getId().equals(id) && clientmap.get(key).getPassword().equals(password)) {
+				return clientmap.get(key);
 			}
 		}
 		return null;
 	}
+			
 	public List<BreakdownDTO> breakList(String account){
 		List<BreakdownDTO> list = new ArrayList<>();
 		for(BreakdownDTO b : bList) {
@@ -46,23 +55,23 @@ public class ClientRepository {
 	}
 	
 	public String getAccount(String id, String password) {
-		for(ClientDTO c : cList) {
-			if(c.getId().equals(id) && c.getPassword().equals(password)) {
-				return c.getAccount();
+		for(String key:clientmap.keySet()) {
+			if(clientmap.get(key).getId().equals(id) && clientmap.get(key).getPassword().equals(password)) {
+				return clientmap.get(key).getAccount();
 			}
 		}
 		return null;
 	}
 	
 	public boolean deposit(String account, long money) {
-		for(ClientDTO c : cList) {
-			if(c.getAccount().equals(account)) {
-				c.setBalance(c.getBalance()+money);
+		for(String key:clientmap.keySet()) {
+			if(clientmap.get(key).getAccount().equals(account)) {
+				clientmap.get(key).setBalance(clientmap.get(key).getBalance()+money);
 				BreakdownDTO breakdownDTO = new BreakdownDTO();
 				breakdownDTO.setAccount(account);
 				breakdownDTO.setDivision("입금");
 				breakdownDTO.setDealMoney(money);
-				breakdownDTO.setTotalMoney(c.getBalance());
+				breakdownDTO.setTotalMoney(clientmap.get(key).getBalance());
 				bList.add(breakdownDTO);
 				return true;
 			}
@@ -70,15 +79,15 @@ public class ClientRepository {
 		return false;
 	}
 	public boolean withdraw(String account, long money) {
-		for(ClientDTO c : cList) {
-			if(c.getAccount().equals(account)) {
-				if(c.getBalance() >= money) {
-					c.setBalance(c.getBalance()-money);
+		for(String key:clientmap.keySet()) {
+			if(clientmap.get(key).getAccount().equals(account)) {
+				if(clientmap.get(key).getBalance() >= money) {
+					clientmap.get(key).setBalance(clientmap.get(key).getBalance()-money);
 					BreakdownDTO breakdownDTO = new BreakdownDTO();
 					breakdownDTO.setAccount(account);
 					breakdownDTO.setDivision("출금");
 					breakdownDTO.setDealMoney(money);
-					breakdownDTO.setTotalMoney(c.getBalance());
+					breakdownDTO.setTotalMoney(clientmap.get(key).getBalance());
 					bList.add(breakdownDTO);
 					return true;
 				}else {
@@ -89,8 +98,8 @@ public class ClientRepository {
 		return false;
 	}
 	public boolean transferCheck(String transferAccount) {
-		for(ClientDTO c : cList) {
-			if(c.getAccount().equals(transferAccount)) {
+		for(String key : clientmap.keySet()) {
+			if(clientmap.get(key).getAccount().equals(transferAccount)) {
 				return true;
 			}
 		}
@@ -99,18 +108,18 @@ public class ClientRepository {
 	
 	
 	public boolean update(String id, String password, String updatePassword) {
-		for(ClientDTO c : cList) {
-			if(c.getId().equals(id) && c.getPassword().equals(password)) {
-				c.setPassword(updatePassword);
+		for(String key : clientmap.keySet()) {
+			if(clientmap.get(key).getId().equals(id) && clientmap.get(key).getPassword().equals(password)) {
+				clientmap.get(key).setPassword(updatePassword);
 				return true;
 			}
 		}
 		return false;
 	}
 	public boolean delete(String id, String password) {
-		for(ClientDTO c : cList) {
-			if(c.getId().equals(id) && c.getPassword().equals(password)) {
-				cList.remove(c);
+		for(String key : clientmap.keySet()) {
+			if(clientmap.get(key).getId().equals(id) && clientmap.get(key).getPassword().equals(password)) {
+				clientmap.remove(key);
 				return true;
 			}
 		}

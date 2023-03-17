@@ -9,7 +9,7 @@ import java.util.Map;
 public class BoardRepository {
 //BoardRepository:데이터를 DB에 저장하는 역할 
 
-	Map<String, BoardDTO > boardmap = new HashMap<>();
+	Map<String, BoardDTO> boardmap = new HashMap<>();
 	// 클래스가 다른클래스에 데이터를 주고받을때 사용하는 것은 메소드를 통해서 하면된다
 	// 메인 -> 서비스 ->레퍼지토리의 순서대로 데이터를 호출시켜야된다
 
@@ -61,7 +61,7 @@ public class BoardRepository {
 				return true;
 			}
 		}
-		return false; // 이프안에 안드러왔으면 false이다
+		return false; // 이프안에 안 들어왔으면 false이다
 	}
 	
 	public boolean updateNew(String bno, String updateTitle, String updateWriter) {
@@ -111,12 +111,14 @@ public class BoardRepository {
 		search.sort(Comparator.naturalOrder()); // search 리스트를 정순으로 정렬하겠다. 
 		for (String m : search) {
 			if(boardmap.get(m).getWriter().equals(searchWriter)) {
+				
 				List.add(boardmap.get(m));
 			}
 		}
 		return List;
 
 	}
+	
 }
 
 	

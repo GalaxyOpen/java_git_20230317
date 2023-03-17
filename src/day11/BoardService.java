@@ -163,11 +163,10 @@ public class BoardService {
     	System.out.println("test데이터 입력 완료");
     }
     public void index() {
-    	System.out.println("찾으실 작성자를 입력하세요");
-    	
+    	System.out.println("검색할 작성자를 입력하세요");
     	String searchWriter = sc.next();sc.nextLine();
-    	
     	List<BoardDTO> boardDTO = br.index(searchWriter);
+    	
     	if(boardDTO.size()==0) {
     		System.out.println("검색된 작성자가 없습니다.");
     	}
